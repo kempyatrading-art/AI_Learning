@@ -38,7 +38,7 @@ else :
     """
 
 #Mini Project :
-
+"""
 attempts =3
 
 while attempts >0:
@@ -54,9 +54,54 @@ while attempts >0:
         
         print("End program")
     
+        """
+""""
+attempts  =2
+
+while attempts >0 :
+    usn = input("Enter the USN :" )
+    if usn == "2vx23ra406" :
+        print (" access gr")
+        break
+    else :
+        attempts -=1
+        print("wrong usn plz ch usn")
+        print ("attempts left ",attempts)
+        print ("program ended ")
         
-    
-    
+        """""
+"""
+attempts =4
+while attempts >0 :
+    usn = input("Enter the USN :").upper()
+    if usn == "2VX23RA406" :
+        print ("access grt")
+        break
+    else : 
+        attempts -=1
+        print("entered usn wrong check once ")
+        print ("attempts left ", attempts)
+        
+if attempts == 0:
+    print ("program end")
+        
+"""
+# 2 ,3 ... usn 
+attempts = 4
+while attempts >0:
+    usn =input("Enter the usn :").upper
+    if usn == "2vx23Ra406" or "2Vx23ra404" :
+        print("access grt")
+        break
+    else :
+        attempts -=1
+        print("attempts left",attempts)
+        
+if attempts ==0:
+    print ("program end ")
+
+        
+
 
 
     
