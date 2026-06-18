@@ -1,0 +1,14 @@
+USN :2VX23RA406
+Name :Rahul
+CGPA :8.18
+
+--------------------
+USN :2VX23RA404
+Name :Raghav
+CGPA :8.180
+--------------------
+
+USN :2VX23RA405
+Name :Raghu
+CGPA :8.25
+--------------------
