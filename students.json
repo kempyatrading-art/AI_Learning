@@ -1,0 +1,25 @@
+{
+    "students": [
+        {
+            "usn": "2VX23RA406",
+            "name": "Rahul",
+            "branch": "Robotics and Automation",
+            "cgpa": 8.18,
+            "goal": "AI Engineer"
+        },
+        {
+            "usn": "2VX23RA404",
+            "name": "Raghav",
+            "branch": "Robotics and Automation",
+            "cgpa": 8.2,
+            "goal": "Robotics Engineer"
+        },
+        {
+            "usn": "2VX23RA405",
+            "name": "Raghu",
+            "branch": "Mechanical Engineering",
+            "cgpa": 8.5,
+            "goal": "Automation Specialist"
+        }
+    ]
+}
