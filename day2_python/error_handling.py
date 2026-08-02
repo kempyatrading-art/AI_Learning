@@ -1,3 +1,4 @@
+#first code 
 """
 a = float(input("Enter first number : "))
 b = float(input("Enter second number : "))
@@ -13,6 +14,7 @@ except ZeroDivisionError :
     print("square: ", a**2,b**2)
     
 """
+#2nd code 
 """
 a = float(input("Enter first number : "))
 b = float(input("Enter second number : "))
@@ -28,7 +30,7 @@ else :
     
 print("square: ", a**2,b**2)
 """
-
+#3rd code 
 try:
     a = float(input("Enter first number: "))
     b = float(input("Enter second number: "))
@@ -47,3 +49,4 @@ try:
 
 except ValueError:
     print("❌ Please enter valid numbers.")
+    
