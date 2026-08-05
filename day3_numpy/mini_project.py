@@ -12,6 +12,9 @@ print("Sum of all Attendance :",np.sum(attendance))
 print(f"Average Attendance : {np.mean(attendance):.2f}") #You'll use formatting like :.2f a lot when displaying percentages, ML model accuracy, and financial values.
 
 """
+
+#Mini Project
+
 import numpy as np 
 scores = np.array ([75,82,91,68,88,95,79])
 
