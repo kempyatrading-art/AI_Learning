@@ -31,7 +31,7 @@ robot_data= {
     "Temperature":[45,48,43,60,82],
     "Status":["Running","Offline","Running","Running","Offline"]
 }
-robots =pd.DataFrame(robot_data)
+robots =pd.DataFrame(robot_data)               #____________DataFrame_____________
 print("Robot Fleet Data:")
 print(robots)
 
@@ -65,3 +65,21 @@ warning_robots =robots[
 
 print("\nWarning alert Robots :")
 print(warning_robots)
+
+# Sorts by Battery in ascending order (default)
+print("\nRobots Sorted By Battery :")
+print(robots.sort_values("Battery"))
+
+# Sorts by Battery in descending order
+print("\nRobots Sorted By Battery according to descending order : ")
+print(robots.sort_values("Battery",ascending =False) )
+
+# DataFrame Aggregation :-
+
+print("\n Robot Fleet Statistics","\n"+"="*30)
+
+print("Average Battery:",robots["Battery"].mean(),"%")
+print("Maximum Battery:",robots["Battery"].max(),"%")
+print("Minium Battery :",robots["Battery"].min(),"%")
+print("Total Battery  :",robots["Battery"].sum(),"%")
+print("Robot Count    :",robots["Robot_ID"].count())
