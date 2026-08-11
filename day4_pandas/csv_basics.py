@@ -14,7 +14,7 @@ df = pd.read_csv("filepath_or_filename.csv")
 
 import pandas as pd 
 
-sensor_data = pd.read_csv("robot_sensor_data.csv")
+sensor_data = pd.read_csv("D:\AI_Learning\day4_pandas\robot_sensor_data.csv")
 print("Robot Sensor Data :")
 print(sensor_data)
 
