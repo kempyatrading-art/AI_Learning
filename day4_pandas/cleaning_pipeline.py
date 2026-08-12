@@ -88,4 +88,4 @@ print(final_data.shape)
 
 # Step 10 — Save the cleaned dataset
 final_data.to_csv("D:/AI_Learning/day4_pandas/cleaned_sensor_data.csv",index=False)
-#to_csv() exports a Pandas DataFrame to a CSV file.
+# to_csv() exports a Pandas DataFrame to a CSV file.
