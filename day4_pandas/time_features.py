@@ -159,7 +159,7 @@ sensor_data["vibration_rolling_min"]=(sensor_data.groupby("robot_id")["vibration
 print("\nVibration Rolling min :")
 print(sensor_data[["timestamp","robot_id","vibration","vibration_rolling_min"]])
 
-# Next: Rolling minimumn for Current
+# Next: Rolling minimum for Current
 sensor_data["current_rolling_min"]=(sensor_data.groupby("robot_id")["current"].rolling(3).min().reset_index(level=0,drop=True))
 print("\nCurrent Rolling min :")
 print(sensor_data[["timestamp","robot_id","current","current_rolling_min"]])
@@ -191,3 +191,238 @@ print(sensor_data[["timestamp","robot_id","current","current_rolling_max"]])
 sensor_data["battery_rolling_max"]=(sensor_data.groupby("robot_id")["battery"].rolling(3).max().reset_index(level=0,drop=True))
 print("\nBattery Rolling max :")
 print(sensor_data[["timestamp","robot_id","battery","battery_rolling_max"]])
+
+#Next → shift() and lag features.
+
+"""
+shift(1) = previous reading
+shift(2) = 2 readings ago
+shift(3) = 3 readings ago
+"""
+
+# Temperature Lag 1
+sensor_data["temperature_previous"] =(sensor_data.groupby("robot_id")["temperature"].shift(1))
+print("\nTemperature Lag 1 :")
+print(sensor_data[["timestamp","robot_id","temperature","temperature_previous"]])
+
+# Vibration Lag 1 
+sensor_data["vibration_previous"] =(sensor_data.groupby("robot_id")["vibration"].shift(1))
+print("\nVibration Lag 1 :")
+print(sensor_data[["timestamp","robot_id","vibration","vibration_previous"]])
+
+# Current Lag 1
+sensor_data["current_previous"] =(sensor_data.groupby("robot_id")["current"].shift(1))
+print("\nCurrent Lag 1 :")
+print(sensor_data[["timestamp","robot_id","current","current_previous"]])
+
+# Battery Lag 1
+sensor_data["battery_previous"] =(sensor_data.groupby("robot_id")["battery"].shift(1))
+print("\nBattery Lag 1 :")
+print(sensor_data[["timestamp","robot_id","battery","battery_previous"]])
+
+
+# Next topic → Categorical Features: One-Hot Encoding
+"""
+Categorical features are converted into numerical representations so ML algorithms can use them.For binary categories, 
+0/1 encoding is simple. For multiple unordered categories, One-Hot Encoding is commonly used.
+"""
+# pd.get_dummies() converts categorical values into separate binary columns.
+# dtype=int makes the output explicitly 0 and 1 instead of False and True.
+
+sensor_data=pd.get_dummies(sensor_data,columns=["status"],dtype=int)
+print("\nOne-Hot Encoding in status :")
+print(sensor_data)
+
+# Next useful topic : Feature selection / choosing which features actually matter for ML.
+# Which columns should be inputs (X), and which column should be the prediction target (y)?
+
+"""
+Important note :-
+
+NaN does matter for ML, but NaN created naturally by shift(), diff(), or rolling() is expected. 
+We handle it at the appropriate preprocessing stage before model training.
+"""
+# Next → Feature Selection :-
+"""
+1. What is Feature Selection?
+Feature selection means:
+Choosing the useful input columns (features) for an ML model and leaving out columns that don't help or shouldn't be used.
+"""
+
+# Next topic → Train/Test Split
+# 1. Why do we split the data?
+"""
+1. Why do we split the data?
+Suppose we have robot sensor data:
+battery
+temperature
+vibration
+current
+...
+and we want our ML model to predict something.
+We cannot train the model using all the data and then test it on the exact same data.
+Why?
+Imagine I give you 100 questions to study, then give you the same 100 questions in the exam.
+You might get 100%.
+But that doesn't prove you can solve new questions.
+ML is similar.
+We want to know:
+Can the model make good predictions on data it has never seen before?
+"""
+#  2. Training data vs Testing data
+"""
+2. Training data vs Testing data
+We divide our dataset into two parts:
+
+                Dataset
+                    ↓
+            ┌─────────┴─────────┐
+            ↓                   ↓
+        Training data       Testing data
+            ↓                   ↓
+        Model learns       Model is evaluated
+        
+Usually, something like:
+80% → Training
+20% → Testing
+
+For example, if we had 1,000 samples:
+800 → training
+200 → testing
+The model sees the 800 training samples during learning.
+The 200 test samples are kept aside until evaluation.
+"""
+# 3. In our robot project
+"""
+3. In our robot project
+
+Suppose:
+X = battery, temperature, vibration, current...
+y = robot status
+
+We could split them:
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
+)
+Don't worry about memorizing every argument yet.
+The important part is understanding what comes out:
+
+X_train → training inputs
+X_test  → testing inputs
+
+y_train → training answers
+y_test  → testing answers
+
+Then:
+X_train + y_train
+        ↓
+    ML model learns
+        ↓
+X_test
+        ↓
+Model predicts
+        ↓
+Compare prediction with y_test
+"""
+
+# 4. What is test_size=0.2?
+"""
+4. What is test_size=0.2?
+It means:
+20% → testing
+80% → training
+
+So:
+test_size=0.2
+means 20% of the data is reserved for testing.
+"""
+
+# 5. What is random_state=42?
+"""
+5. What is random_state=42?
+This is not an ML algorithm.
+It simply makes the random split repeatable.
+Without it, you could run your program today and get one split, then run it again and get a different split.
+With:
+random_state=42
+you get the same split every time, assuming the data and setup are unchanged.
+The number 42 isn't special. You could use another fixed integer.
+"""
+
+#Write this in your notes :
+"""
+Train/Test Split: Dividing a dataset into training and testing portions. 
+The training data is used to train the ML model, while the testing data is kept separate to evaluate how well the model performs on unseen data.
+"""
+
+# Next → Feature Scaling
+
+"""
+Next → Feature Scaling
+Now we move to another very important ML preprocessing step.
+Our robot features have very different numerical ranges.
+
+For example:
+battery      → 3 to 95
+temperature  → 43 to 97
+vibration    → 1.1 to 8.1
+current      → 2.0 to 6.5
+
+If we directly give these to some ML algorithms, the features with larger numerical scales can have an unwanted influence.
+
+What is Feature Scaling?
+Feature scaling means transforming numerical features so that they are on comparable scales.
+
+For example:
+Before:
+battery       = 92
+temperature   = 45
+vibration    = 1.2
+current      = 2.1
+
+After scaling, they might become values roughly around:
+battery       → 0.8
+temperature   → -0.5
+vibration     → -0.9
+current       → -0.7
+
+The exact values depend on the scaling method.
+The important method for us → Standardization
+One of the most commonly used methods is StandardScaler from Scikit-learn.
+It transforms the feature using its mean and standard deviation:
+Where:
+x = original value
+μ = mean of that feature
+σ = standard deviation
+z = scaled value
+After standardization, a feature generally has:
+mean ≈ 0
+standard deviation ≈ 1
+Why is this useful?
+Consider two features:
+temperature → 40–100
+vibration   → 1 –8
+After standardization, both are represented relative to their own distributions rather than simply their raw numerical magnitude.
+Very important ⚠️
+We don't scale everything blindly.
+
+For example:
+battery → numerical → can be scaled
+temperature → numerical → can be scaled
+vibration → numerical → can be scaled
+current → numerical → can be scaled
+status_Offline → binary → usually leave as 0/1
+status_Running → binary → usually leave as 0/1
+
+And columns such as robot_id are not automatically useful just because they're numbers.
+
+# Write this in your notes :-
+Feature Scaling: Transforming numerical features to comparable scales so that differences in their original numerical ranges do not unnecessarily affect ML algorithms.
+Standardization: A scaling technique that transforms data using the feature's mean and standard deviation.
+"""
+
