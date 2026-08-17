@@ -1363,3 +1363,137 @@ y_pred = model.predict(x_test)
 
 print("\nActual:",y_test.values)
 print("predicted:",y_pred)
+
+# Lesson 1: Understanding Model Evaluation :- 
+
+# 1. Accuracy
+"""
+1. Accuracy
+The simplest metric is accuracy.
+It tells us:
+Out of all predictions, how many were correct?
+For example:
+Actual:    [1, 0, 1, 1, 0]
+Predicted: [1, 0, 0, 1, 0]
+There are 4 correct predictions out of 5.
+So:
+Accuracy=
+Total Predictions
+Correct Predictions
+	​
+Accuracy=
+5
+4
+	​
+=0.80
+So the model has 80% accuracy.
+TAKE NOTES
+Accuracy
+Accuracy is the proportion of predictions that the model classified correctly.
+"""
+# Accuracy :-Accuracy is the proportion of predictions that the model classified correctly.
+
+# 1. Accuracy :-
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(y_test,y_pred)
+print("\naccuracy :")
+print(accuracy)
+
+# 3. Confusion Matrix
+"""
+TAKE NOTES
+
+Write this table in your notebook:
+
+|                     | Predicted Negative | Predicted Positive |
+| ------------------- | ------------------ | ------------------ |
+| **Actual Negative** | TN                 | FP                 |
+| **Actual Positive** | FN                 | TP                 |
+
+
+Remember:
+
+True = prediction was correct
+
+False = prediction was wrong
+
+Positive/Negative = what the model predicted
+"""
+# 3. Confusion Matrix :-
+from sklearn .metrics import confusion_matrix
+cm = confusion_matrix(y_test,y_pred)
+
+print("\nConfusion Matrix")
+print(cm)
+
+# Confusion Matrix :-
+"""
+Confusion Matrix
+
+For binary classification:
+TN = Correctly predicted Negative
+TP = Correctly predicted Positive
+FP = Negative predicted as Positive
+FN = Positive predicted as Negative
+
+For fault detection:
+0 → Normal
+1 → Fault
+
+TN → Normal correctly detected
+TP → Fault correctly detected
+FP → False alarm
+FN → Missed fault
+
+Important: In safety/fault-detection applications, FN can be especially important because the model 
+fails to detect an actual fault.
+"""
+# 3. Precision vs Recall :-
+"""
+3. Precision vs Recall
+
+This distinction is extremely important.
+Precision
+Think:
+"When I say FAULT, am I usually right?"
+Concerned about false alarms (FP).
+Recall
+Think:
+"Did I find all the actual FAULTS?"
+Concerned about missed faults (FN).
+For a robot safety system, recall can be especially important.
+If:
+Actual fault → Model says normal
+that's:
+FN — False Negative
+The robot fault was missed."""
+# 4. Let's calculate them using sklearn :-
+from sklearn .metrics import precision_score ,recall_score
+precision = precision_score(y_test,y_pred)
+recall = recall_score(y_test, y_pred)
+
+print("\nPrecision :",precision)
+print("Recall:",recall)
+
+
+# Lesson 3 — F1 Score :-
+"""
+MATH NOTES
+Write:
+F1=2
+Precision+Recall
+Precision×Recall
+	​
+F1-score is the harmonic mean of precision and recall.
+The important idea is:
+A good F1-score generally requires both precision and recall to be good.
+"""
+# 3. Calculate it using sklearn :- 
+from sklearn.metrics import f1_score
+F1 = f1_score(y_test ,y_pred)
+print("F1 Score :",F1)
+
+# 4. Classification Report :- 
+from sklearn.metrics import classification_report 
+print(classification_report(y_test,y_pred))
+
