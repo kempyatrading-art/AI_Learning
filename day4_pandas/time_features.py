@@ -1497,3 +1497,14 @@ print("F1 Score :",F1)
 from sklearn.metrics import classification_report 
 print(classification_report(y_test,y_pred))
 
+"""
+Classification report :- classification_report() provides important classification metrics such as:
+Precision
+Recall
+F1-score
+Support
+"""
+"""
+A model must be evaluated using appropriate metrics, not accuracy alone. For classification, 
+commonly used metrics include confusion matrix, precision, recall and F1-score.
+"""
