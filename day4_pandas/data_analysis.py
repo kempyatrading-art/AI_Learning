@@ -130,3 +130,10 @@ print(robot_health)
 """
 What is a risk score?
 A risk score is a numerical value representing how many warning conditions a system has detected."""
+
+"""
+Feature engineering
+Feature engineering is the process of creating useful input variables from raw data.
+"""
+# Next topic: Time-Based Feature Engineering
+
